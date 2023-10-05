@@ -1,14 +1,18 @@
 import java.util.*;
 
-public class Student{
+public class Student {
     private UUID ID;
-    private List<String> answers = new ArrayList();
-    public Student(){
+    private Set<String> answers = new HashSet<>();
+    // default constructor
+    public Student() {
+        this.ID = UUID.randomUUID();
+        this.answers = new HashSet<>();
     }
-    public Student(int i){
-        setID(UUID.randomUUID());
+    // inputted constructor
+    public Student(UUID id, HashSet<String> answers){
+        this.ID = id;
+        this.answers = answers;
     }
-
     public void setID(UUID randomUUID) {
         this.ID = randomUUID;
     }
@@ -18,13 +22,13 @@ public class Student{
     public void addAns(String answer){
         this.answers.add(answer);
     }
-    public void setAnswers(List<String> answers) {
+    public void setAnswers(HashSet<String> answers) {
         this.answers = answers;
     }
 
     //    public void showAns(){
 //        System.out.println(getAnswers());
 //    }
-    public List<String> getAnswers() {return answers;}
+    public Set<String> getAnswers() {return answers;}
 
 }

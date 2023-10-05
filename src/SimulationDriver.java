@@ -1,10 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class SimulationDriver {
     public static void main(String[] args) {
-        final int studentNum = 100;
+        final int studentNum = 10;
         //Student[] students = { new Student(111)};
 
 
@@ -48,6 +46,7 @@ public class SimulationDriver {
         vote.theQuestion();
 
         for (Student student : students) {
+            //System.out.println("stud & ans: " + student.getID() + " " + student.getAnswers());
             vote.addStuAns(student.getID(), student.getAnswers());
         }
         vote.displayResults();
@@ -62,7 +61,7 @@ public class SimulationDriver {
         return student;
     }
 
-//    public static void genAns(Student[] students, Question question){
+    //    public static void genAns(Student[] students, Question question){
 //        Random random = new Random();
 //        for (Student s : students){
 //            List<String> choice = question.getChoices();
@@ -77,29 +76,30 @@ public class SimulationDriver {
         List<String> studentAnswers = new ArrayList<>();
         int rand;
         for (Student s : students) {
+            s.setAnswers(new HashSet<>());
             if (question instanceof SingleChoice) {
                 //single-choice questions, randomly select one
                 List<String> choices = question.getChoices();
                 rand = random.nextInt(choices.size());
-                studentAnswers.add(choices.get(rand));
+                s.addAns(choices.get(rand));
                 //System.out.println(rand);
             } else if (question instanceof MultipleChoice) {
                 //multiple choice questions, randomly select one or more
                 List<String> choices = question.getChoices();
                 rand = random.nextInt(choices.size()) + 2;
+                //System.out.print(s.getID() + ": ");
                 for (int i = 0; i < rand; i++) {
                     rand = random.nextInt(choices.size());
-                    studentAnswers.add(choices.get(rand));
-                    System.out.print(choices.get(rand) + ", ");
+                    s.addAns(choices.get(rand));
+                    //System.out.print(choices.get(rand) + " | ");
                 }
-                System.out.println();
+                //System.out.println();
             }
             //System.out.println(s);
-            s.setAnswers(studentAnswers);
+            //s.setAnswers(studentAnswers);
+            //System.out.println("student: " + s.getID() + "student's answers: " + s.getAnswers());
         }
     }
-
-
 }
 
 

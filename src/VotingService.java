@@ -1,18 +1,19 @@
 import java.util.*;
 
 public class VotingService {
-    private Map<UUID, List<String>> allAnswers = new HashMap<>();
+    private Map<UUID, Set<String>> allAnswers = new HashMap<>();
     Question question;
 
     public VotingService(Question question){
         this.question = question;
     }
-    public void addStuAns(UUID uuid, List<String> answer){
+    public void addStuAns(UUID uuid, Set<String> answer){
         this.allAnswers.put(uuid, answer);
     }
 
     public void displayResults() {
         List<String> correctAnswers = this.question.answers;
+        Set<String> correctAnswersSet = new HashSet<>(correctAnswers);
         Map<String, Integer> choiceCounts = new HashMap<>();
 
         for (String choice : this.question.choices) {
@@ -21,14 +22,13 @@ public class VotingService {
 
         int totalCorrect = 0;
         int totalWrong = 0;
-        System.out.print(allAnswers);
-        for (List<String> studentAnswers : allAnswers.values()) {
-            System.out.println(studentAnswers);
+        for (Set<String> studentAnswers : allAnswers.values()) {
+            //System.out.println(studentAnswers);
             boolean isCorrect = true;
             //Set<String> correct = new HashSet<>();
 
-            if (new HashSet<>(studentAnswers).containsAll(correctAnswers)){
-                //System.out.printf("hi");
+            if (studentAnswers.equals(correctAnswersSet)){
+                //System.out.println(studentAnswers + " ඞmog " + correctAnswers);
                 totalCorrect++;
             } else {
                 totalWrong++;
@@ -45,7 +45,7 @@ public class VotingService {
 //            }
         }
 
-        System.out.println();
+        //System.out.println();
         System.out.println("Correct Answer(s): " + correctAnswers);
 
         for (String choice : this.question.choices) {
@@ -53,13 +53,14 @@ public class VotingService {
         }
 
         System.out.println("Total Correct: " + totalCorrect);
-        System.out.println("Total Wrong: " + totalWrong + "\n");
+        System.out.println("Total Wrong: " + totalWrong);
+        for (Map.Entry<UUID, Set<String>> entry : allAnswers.entrySet()) {
+            UUID id = entry.getKey();
+            Set<String> answers = entry.getValue();
+            System.out.println(id + " " + answers);
+        }
+        System.out.println();
     }
-
-
-
-
-
 
     public void theQuestion(){
         this.question.showQuestion();
