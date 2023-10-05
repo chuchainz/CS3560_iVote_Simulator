@@ -10,8 +10,7 @@ public abstract class Question {
     public void setQuestion(String question){
         this.questions = question;
     }
-    public void setChoices(String choice, boolean answer){}
-    public void setAnswers(String choice, boolean answer){}
+    abstract void add(String choice, boolean answer);
 
     //getters to get our questions, choices, and answers
     public String getQuestion(){
